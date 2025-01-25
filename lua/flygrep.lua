@@ -174,7 +174,7 @@ local function open_win()
   -- 避免使用 jk 切换到 normal 模式
   -- https://github.com/neovim/neovim/discussions/32208
   -- vim.keymap.del('i', 'jk', {buffer = prompt_bufid})
-  if vim.fn.hasmapto('j', 'i') then
+  if vim.fn.hasmapto('j', 'i') == 1 then
     vim.keymap.set('i', 'j', 'j', {
     nowait = true, buffer = prompt_bufid})
   end
