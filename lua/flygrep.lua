@@ -174,6 +174,10 @@ local function open_win()
   -- 避免使用 jk 切换到 normal 模式
   -- https://github.com/neovim/neovim/discussions/32208
   -- vim.keymap.del('i', 'jk', {buffer = prompt_bufid})
+  if vim.fn.hasmapto('j', 'i') then
+    vim.keymap.set('i', 'j', 'j', {
+    nowait = true, buffer = prompt_bufid})
+  end
 
   -- 使用 Tab/Shift-Tab 上下移动搜素结果
   vim.keymap.set('i', '<Tab>', function()
