@@ -146,7 +146,7 @@ local function open_win()
     return filename, linenr, colum
   end
   -- 使用回车键打开光标所在的搜索结果，同时关闭界面
-  vim.keymap.set('i', '<Enter>', function()
+  local function open_item(cmd)
     vim.cmd('noautocmd stopinsert')
     -- 获取搜索结果光表行
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
@@ -154,8 +154,21 @@ local function open_win()
       get_file_pos(vim.api.nvim_buf_get_lines(result_bufid, line_number - 1, line_number, false)[1])
     vim.api.nvim_win_close(prompt_winid, true)
     vim.api.nvim_win_close(result_winid, true)
-    vim.cmd('edit ' .. filename)
+    vim.cmd(cmd .. ' ' .. filename)
     vim.api.nvim_win_set_cursor(0, { linenr, colum })
+    
+  end
+  vim.keymap.set('i', '<Enter>', function()
+    open_item('edit')
+  end, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-v>', function()
+    open_item('vsplit')
+  end, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-s>', function()
+    open_item('split')
+  end, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-t>', function()
+    open_item('tabedit')
   end, { buffer = prompt_bufid })
 
   -- 使用 Tab/Shift-Tab 上下移动搜素结果

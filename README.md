@@ -22,8 +22,11 @@
 
 ## Key Bindings
 
-| Key bindings | descretion       |
-| ------------ | ---------------- |
-| `<Enter>`    | open cursor item |
-| `<Tab>`      | next item        |
-| `<S-Tab>`    | previous item    |
+| Key bindings | descretion                         |
+| ------------ | ---------------------------------- |
+| `<Enter>`    | open cursor item                   |
+| `<Tab>`      | next item                          |
+| `<S-Tab>`    | previous item                      |
+| `<C-s>`      | open item in split window          |
+| `<C-v>`      | open item in vertical split window |
+| `<C-t>`      | open item in new tabpage           |
