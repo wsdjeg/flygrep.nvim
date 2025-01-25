@@ -1,16 +1,8 @@
-# flygrep.nvim[WIP]
+# flygrep.nvim
 
 > grep on the fly in neovim
 
 
-## Configuration
+## Command
 
-
-```lua
-
-require('flygrep').setup(
-    enable_preview = false -- enable/disable floating preview windows
-
-)
-
-```
+- `:FlyGrep`: open flygrep in current directory
