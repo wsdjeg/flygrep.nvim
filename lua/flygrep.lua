@@ -171,6 +171,10 @@ local function open_win()
     open_item('tabedit')
   end, { buffer = prompt_bufid })
 
+  -- 避免使用 jk 切换到 normal 模式
+  -- https://github.com/neovim/neovim/discussions/32208
+  -- vim.keymap.del('i', 'jk', {buffer = prompt_bufid})
+
   -- 使用 Tab/Shift-Tab 上下移动搜素结果
   vim.keymap.set('i', '<Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
