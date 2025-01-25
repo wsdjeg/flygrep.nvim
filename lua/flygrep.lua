@@ -28,8 +28,10 @@ local function open_win()
     -- noautocmd = true,
   })
 
+  vim.api.nvim_set_option_value('winhighlight', 'NormalFloat:Normal,FloatBorder:WinSeparator', {win = prompt_winid})
   vim.api.nvim_set_option_value('number', false, { win = prompt_winid })
   vim.api.nvim_set_option_value('relativenumber', false, { win = prompt_winid })
+  vim.api.nvim_set_option_value('cursorline', false, { win = prompt_winid })
   local extns = vim.api.nvim_create_namespace('floatgrep_ext')
   vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
     sign_text = '>',
@@ -49,6 +51,8 @@ local function open_win()
     title_pos = 'center',
     -- noautocmd = true,
   })
+  vim.api.nvim_set_option_value('winhighlight', 'NormalFloat:Normal,FloatBorder:WinSeparator', {win = result_winid})
+  vim.api.nvim_set_option_value('cursorline', true, { win = result_winid })
   local ok, cmp = pcall(require, 'cmp')
   if ok then
     cmp.setup.buffer({
