@@ -20,6 +20,15 @@ local prompt_winid = -1
 local prompt_count_id
 local extns = vim.api.nvim_create_namespace('floatgrep_ext')
 
+local function update_result_count()
+  local count = vim.api.nvim_buf_line_count(result_bufid)
+  local line = vim.api.nvim_win_get_cursor(result_winid)[1]
+  prompt_count_id = vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
+    id = prompt_count_id,
+    virt_text = { { string.format('%d/%d', line, count), 'Comment' } },
+    virt_text_pos = 'right_align',
+  })
+end
 
 local function grep_timer(t)
   local grep_cmd = {
@@ -48,13 +57,7 @@ local function grep_timer(t)
         else
           vim.api.nvim_buf_set_lines(result_bufid, -1, -1, false, data)
         end
-        local count = vim.api.nvim_buf_line_count(result_bufid)
-        local line = vim.api.nvim_win_get_cursor(result_winid)[1]
-        prompt_count_id = vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
-          id = prompt_count_id,
-          virt_text = {{string.format('%d/%d', line, count), 'Comment'}},
-          virt_text_pos = 'right_align',
-        })
+        update_result_count()
       end
     end,
   })
@@ -198,11 +201,13 @@ local function open_win()
   vim.keymap.set('i', '<Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
+    update_result_count()
   end, { buffer = prompt_bufid })
 
   vim.keymap.set('i', '<S-Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
+    update_result_count()
   end, { buffer = prompt_bufid })
   -- 高亮文件名及位置
 
