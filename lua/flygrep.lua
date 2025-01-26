@@ -17,6 +17,10 @@ local result_winid = -1
 local prompt_bufid = -1
 local prompt_winid = -1
 
+local prompt_count_id
+local extns = vim.api.nvim_create_namespace('floatgrep_ext')
+
+
 local function grep_timer(t)
   local grep_cmd = {
     'rg',
@@ -32,6 +36,10 @@ local function grep_timer(t)
     '.',
   }
   vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
+  if prompt_count_id then
+    pcall(vim.api.nvim_buf_del_extmark, prompt_bufid, extns, prompt_count_id)
+    prompt_count_id = nil
+  end
   search_jobid = job.start(grep_cmd, {
     on_stdout = function(id, data)
       if id == search_jobid then
@@ -40,6 +48,13 @@ local function grep_timer(t)
         else
           vim.api.nvim_buf_set_lines(result_bufid, -1, -1, false, data)
         end
+        local count = vim.api.nvim_buf_line_count(result_bufid)
+        local line = vim.api.nvim_win_get_cursor(result_winid)[1]
+        prompt_count_id = vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
+          id = prompt_count_id,
+          virt_text = {{string.format('%d/%d', line, count), 'Comment'}},
+          virt_text_pos = 'right_align',
+        })
       end
     end,
   })
@@ -77,7 +92,6 @@ local function open_win()
   vim.api.nvim_set_option_value('number', false, { win = prompt_winid })
   vim.api.nvim_set_option_value('relativenumber', false, { win = prompt_winid })
   vim.api.nvim_set_option_value('cursorline', false, { win = prompt_winid })
-  local extns = vim.api.nvim_create_namespace('floatgrep_ext')
   vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
     sign_text = '>',
     sign_hl_group = 'Error',
@@ -156,7 +170,6 @@ local function open_win()
     vim.api.nvim_win_close(result_winid, true)
     vim.cmd(cmd .. ' ' .. filename)
     vim.api.nvim_win_set_cursor(0, { linenr, colum })
-    
   end
   vim.keymap.set('i', '<Enter>', function()
     open_item('edit')
@@ -176,7 +189,9 @@ local function open_win()
   -- vim.keymap.del('i', 'jk', {buffer = prompt_bufid})
   if vim.fn.hasmapto('j', 'i') == 1 then
     vim.keymap.set('i', 'j', 'j', {
-    nowait = true, buffer = prompt_bufid})
+      nowait = true,
+      buffer = prompt_bufid,
+    })
   end
 
   -- 使用 Tab/Shift-Tab 上下移动搜素结果
