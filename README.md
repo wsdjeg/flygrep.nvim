@@ -2,11 +2,12 @@
 
 > searching text in neovim floating window asynchronously 
 
-![Image](https://github.com/user-attachments/assets/0618e14b-ba1c-4bd0-b9d3-2bca62f3b92e)
+![Image](https://github.com/user-attachments/assets/862a47a6-4620-4f3b-a1a1-df47c8e92ddc)
 
 <!-- vim-markdown-toc GFM -->
 
 - [Intro](#intro)
+- [Requirements](#requirements)
 - [Install](#install)
 - [Command](#command)
 - [Options](#options)
@@ -16,11 +17,17 @@
 
 ## Intro
 
-`flygrep.nvim` is a neovim plugin that can be used to search code asynchronously in real time.
+`flygrep.nvim` is a neovim plugin that can be used to search code asynchronously in real time. 
+
+
+## Requirements
+
+- [neovim](https://github.com/neovim/neovim): >= v0.10.0
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
 
 ## Install
 
-**vim-plug:**
+- use [vim-plug](https://github.com/junegunn/vim-plug) package manager
 
 ```
 Plug 'wsdjeg/flygrep.nvim'
