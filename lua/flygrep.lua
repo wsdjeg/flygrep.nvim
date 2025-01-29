@@ -32,19 +32,36 @@ local function update_result_count()
 end
 
 local function grep_timer(t)
-  local grep_cmd = {
-    'rg',
-    '--no-heading',
-    '--color=never',
-    '--with-filename',
-    '--line-number',
-    '--column',
-    '-g',
-    '!.git',
-    '-e',
-    grep_input,
-    '.',
-  }
+  local grep_cmd
+  if fix_string then
+    grep_cmd = {
+      'rg',
+      '--no-heading',
+      '--color=never',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '-g',
+      '!.git',
+      '-F',
+      grep_input,
+      '.',
+    }
+  else
+    grep_cmd = {
+      'rg',
+      '--no-heading',
+      '--color=never',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '-g',
+      '!.git',
+      '-e',
+      grep_input,
+      '.',
+    }
+  end
   vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
   if prompt_count_id then
     pcall(vim.api.nvim_buf_del_extmark, prompt_bufid, extns, prompt_count_id)
@@ -74,13 +91,17 @@ local function build_prompt_title()
     table.insert(t, { ' string ', 'SpaceVim_statusline_b' })
   end
   table.insert(t, { '', 'SpaceVim_statusline_b' })
-  table.insert(t, {' ' .. vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_b'})
+  table.insert(t, { ' ' .. vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_b' })
   -- return {{}, {}, {}}
   return t
 end
 
 local function toggle_fix_string()
   fix_string = not fix_string
+  vim.cmd('doautocmd TextChangedI')
+  local conf = vim.api.nvim_win_get_config(prompt_winid)
+  conf.title = build_prompt_title()
+  vim.api.nvim_win_set_config(prompt_winid, conf)
 end
 
 local function open_win()
@@ -230,8 +251,12 @@ local function open_win()
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
     update_result_count()
   end, { buffer = prompt_bufid })
-  -- 高亮文件名及位置
+  vim.keymap.set('i', '<C-e>', function()
+    toggle_fix_string()
+    update_result_count()
+  end, { buffer = prompt_bufid })
 
+  -- 高亮文件名及位置
   vim.fn.matchadd(
     'Comment',
     [[\([A-Z]:\)\?[^:]*:\d\+:\(\d\+:\)\?]],
