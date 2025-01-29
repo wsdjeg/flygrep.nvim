@@ -82,8 +82,8 @@ local function open_win()
     row = start_row + screen_height - 3,
     focusable = true,
     border = 'rounded',
-    title = 'Input',
-    title_pos = 'center',
+    title = {{' FlyGrep ', 'SpaceVim_statusline_a_bold'}, {'', 'SpaceVim_statusline_a_SpaceVim_statusline_b'}, {' ' .. vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_b'}},
+    title_pos = 'left',
     -- noautocmd = true,
   })
 
@@ -110,8 +110,8 @@ local function open_win()
     row = start_row,
     focusable = false,
     border = 'rounded',
-    title = 'Result',
-    title_pos = 'center',
+    -- title = 'Result',
+    -- title_pos = 'center',
     -- noautocmd = true,
   })
   vim.api.nvim_set_option_value(
