@@ -270,4 +270,8 @@ function M.open()
   open_win()
 end
 
+function M.setup(conf)
+  require('flygrep.config').setup(conf)
+end
+
 return M
