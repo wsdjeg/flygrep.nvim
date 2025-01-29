@@ -10,6 +10,7 @@ local grep_timer_id = -1
 local grep_input = ''
 local search_jobid = -1
 local search_hi_id = -1
+local fix_string = false
 
 -- all buffers
 local result_bufid = -1
@@ -63,6 +64,25 @@ local function grep_timer(t)
   })
 end
 
+local function build_prompt_title()
+  local t = {}
+  table.insert(t, { ' FlyGrep ', 'SpaceVim_statusline_a_bold' })
+  table.insert(t, { '', 'SpaceVim_statusline_a_SpaceVim_statusline_b' })
+  if not fix_string then
+    table.insert(t, { ' expr ', 'SpaceVim_statusline_b' })
+  else
+    table.insert(t, { ' string ', 'SpaceVim_statusline_b' })
+  end
+  table.insert(t, { '', 'SpaceVim_statusline_b' })
+  table.insert(t, {' ' .. vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_b'})
+  -- return {{}, {}, {}}
+  return t
+end
+
+local function toggle_fix_string()
+  fix_string = not fix_string
+end
+
 local function open_win()
   -- 窗口位置
   -- 宽度： columns 的 80%
@@ -82,7 +102,7 @@ local function open_win()
     row = start_row + screen_height - 3,
     focusable = true,
     border = 'rounded',
-    title = {{' FlyGrep ', 'SpaceVim_statusline_a_bold'}, {'', 'SpaceVim_statusline_a_SpaceVim_statusline_b'}, {' ' .. vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_b'}},
+    title = build_prompt_title(),
     title_pos = 'left',
     -- noautocmd = true,
   })
