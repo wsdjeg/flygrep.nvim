@@ -21,6 +21,10 @@ M.timeout = 200
 
 M.setup = function(conf)
 
+  M.color_templete = conf.color_templete or M.color_templete
+
+  M.timeout = conf.timeout or M.timeout
+
 
 end
 
