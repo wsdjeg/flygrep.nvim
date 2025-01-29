@@ -2,7 +2,7 @@
 
 > searching text in neovim floating window asynchronously 
 
-![Image](https://github.com/user-attachments/assets/862a47a6-4620-4f3b-a1a1-df47c8e92ddc)
+![Image](https://github.com/user-attachments/assets/88e47b60-40f4-4e62-afbd-650562f302c8)
 
 <!-- vim-markdown-toc GFM -->
 
