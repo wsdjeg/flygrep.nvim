@@ -1,4 +1,5 @@
 local M = {}
+local conf = require('flygrep.config')
 local job = require('spacevim.api.job')
 local ok, cmp = pcall(require, 'cmp')
 if not ok then
@@ -69,7 +70,7 @@ local function grep_timer(t)
   end
   search_jobid = job.start(grep_cmd, {
     on_stdout = function(id, data)
-      if id == search_jobid then
+      if id == search_jobid and vim.api.nvim_buf_is_valid(prompt_bufid) and vim.api.nvim_win_is_valid(prompt_winid) then
         if vim.fn.getbufline(result_bufid, 1)[1] == '' then
           vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, data)
         else
@@ -83,15 +84,16 @@ end
 
 local function build_prompt_title()
   local t = {}
-  table.insert(t, { ' FlyGrep ', 'SpaceVim_statusline_a_bold' })
-  table.insert(t, { '', 'SpaceVim_statusline_a_SpaceVim_statusline_b' })
+  table.insert(t, { ' FlyGrep ', 'FlyGrep_a' })
+  table.insert(t, { '', 'FlyGrep_a_FlyGrep_b' })
   if not fix_string then
-    table.insert(t, { ' expr ', 'SpaceVim_statusline_b' })
+    table.insert(t, { ' expr ', 'FlyGrep_b' })
   else
-    table.insert(t, { ' string ', 'SpaceVim_statusline_b' })
+    table.insert(t, { ' string ', 'FlyGrep_b' })
   end
-  table.insert(t, { '', 'SpaceVim_statusline_b' })
-  table.insert(t, { ' ' .. vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_b' })
+  table.insert(t, { '', 'FlyGrep_b' })
+  table.insert(t, { ' ' .. vim.fn.getcwd() .. ' ', 'FlyGrep_b' })
+  table.insert(t, { '', 'FlyGrep_b_Normal' })
   -- return {{}, {}, {}}
   return t
 end
@@ -105,6 +107,7 @@ local function toggle_fix_string()
 end
 
 local function open_win()
+  require('flygrep.highlight').def_higroup()
   -- 窗口位置
   -- 宽度： columns 的 80%
   local screen_width = math.floor(vim.o.columns * 0.8)
@@ -181,7 +184,7 @@ local function open_win()
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         pcall(vim.fn.timer_stop, grep_timer_id)
         search_hi_id = vim.fn.matchadd('Search', grep_input, 10, -1, { window = result_winid })
-        grep_timer_id = vim.fn.timer_start(vim.g.flygrep_timer, grep_timer, { ['repeat'] = 1 })
+        grep_timer_id = vim.fn.timer_start(conf.timeout, grep_timer, { ['repeat'] = 1 })
       else
         vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
       end

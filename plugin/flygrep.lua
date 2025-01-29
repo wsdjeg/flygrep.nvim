@@ -10,6 +10,4 @@ vim.api.nvim_create_user_command('FlyGrep', function(opt)
   require('flygrep').open()
 end, {})
 
-if not vim.g.flygrep_timer then
-  vim.g.flygrep_timer = 200
-end
+require('flygrep').setup()
