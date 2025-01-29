@@ -2,6 +2,8 @@
 
 > searching text in neovim floating window asynchronously 
 
+**Alpha version. Any changes, including backward incompatible ones, are applied without announcements.**
+
 ![Image](https://github.com/user-attachments/assets/862a47a6-4620-4f3b-a1a1-df47c8e92ddc)
 
 <!-- vim-markdown-toc GFM -->
