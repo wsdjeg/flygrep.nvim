@@ -186,6 +186,10 @@ local function open_win()
         search_hi_id = vim.fn.matchadd('Search', grep_input, 10, -1, { window = result_winid })
         grep_timer_id = vim.fn.timer_start(conf.timeout, grep_timer, { ['repeat'] = 1 })
       else
+        pcall(vim.fn.matchdelete, search_hi_id, result_winid)
+        pcall(vim.fn.timer_stop, grep_timer_id)
+        job.stop(search_jobid)
+        search_jobid = 0
         vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
       end
     end,
