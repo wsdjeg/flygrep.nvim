@@ -2,7 +2,7 @@
 
 > searching text in neovim floating window asynchronously 
 
-![Image](https://github.com/user-attachments/assets/88e47b60-40f4-4e62-afbd-650562f302c8)
+![Image](https://github.com/user-attachments/assets/49638d4c-4828-4d46-9c24-165102ef61a7)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -77,6 +77,7 @@ require('flygrep').setup({
     ignore_case = { '-i' },
     hidden_opt = { '--hidden' },
   },
+  matched_higroup = 'IncSearch',
 })
 ```
 

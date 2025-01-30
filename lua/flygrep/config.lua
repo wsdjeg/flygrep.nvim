@@ -38,6 +38,8 @@ M.command = {
 
 M.timeout = 200
 
+M.matched_higroup = 'IncSearch'
+
 M.setup = function(conf)
   if type(conf) ~= 'table' then
     return
