@@ -40,7 +40,6 @@ local function build_grep_command()
   if fix_string then table.insert(cmd, conf.command.fixed_string_opt) else table.insert(cmd, conf.command.expr_opt) end
   table.insert(cmd, grep_input)
   table.insert(cmd, '.')
-  vim.print(cmd)
   return cmd
 end
 
