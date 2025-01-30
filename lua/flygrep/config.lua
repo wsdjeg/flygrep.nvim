@@ -20,6 +20,7 @@ M.color_templete = {
 M.timeout = 200
 
 M.setup = function(conf)
+  if type(conf) ~= "table" then return end
 
   M.color_templete = conf.color_templete or M.color_templete
 
