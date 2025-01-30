@@ -32,43 +32,25 @@ local function update_result_count()
   })
 end
 
-local function grep_timer(t)
-  local grep_cmd
-  if fix_string then
-    grep_cmd = {
-      'rg',
-      '--no-heading',
-      '--color=never',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '-g',
-      '!.git',
-      '-F',
-      grep_input,
-      '.',
-    }
-  else
-    grep_cmd = {
-      'rg',
-      '--no-heading',
-      '--color=never',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '-g',
-      '!.git',
-      '-e',
-      grep_input,
-      '.',
-    }
+local function build_grep_command()
+  local cmd = {conf.command.execute}
+  for _, v in ipairs(conf.command.default_opts) do
+    table.insert(cmd, v)
   end
+  if fix_string then table.insert(cmd, conf.command.fixed_string_opt) else table.insert(cmd, conf.command.expr_opt) end
+  table.insert(cmd, grep_input)
+  table.insert(cmd, '.')
+  vim.print(cmd)
+  return cmd
+end
+
+local function grep_timer(t)
   vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
   if prompt_count_id then
     pcall(vim.api.nvim_buf_del_extmark, prompt_bufid, extns, prompt_count_id)
     prompt_count_id = nil
   end
-  search_jobid = job.start(grep_cmd, {
+  search_jobid = job.start(build_grep_command(), {
     on_stdout = function(id, data)
       if id == search_jobid and vim.api.nvim_buf_is_valid(prompt_bufid) and vim.api.nvim_win_is_valid(prompt_winid) then
         if vim.fn.getbufline(result_bufid, 1)[1] == '' then

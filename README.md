@@ -23,7 +23,7 @@
 ## Requirements
 
 - [neovim](https://github.com/neovim/neovim): >= v0.10.0
-- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [ripgrep](https://github.com/BurntSushi/ripgrep): If you are using other searching tool, you need to set command option of flygrep.
 
 ## Install
 
@@ -58,6 +58,25 @@ require('flygrep').setup({
     },
   },
   timeout = 200,
+  command = {
+    execute = 'rg',
+    default_opts = {
+      '--no-heading',
+      '--color=never',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '-g',
+      '!.git',
+    },
+    recursive_opt = {},
+    expr_opt = { '-e' },
+    fixed_string_opt = { '-F' },
+    default_fopts = { '-N' },
+    smart_case = { '-S' },
+    ignore_case = { '-i' },
+    hidden_opt = { '--hidden' },
+  },
 })
 ```
 

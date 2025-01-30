@@ -17,16 +17,35 @@ M.color_templete = {
   },
 }
 
+M.command = {
+  execute = 'rg',
+  default_opts = {
+    '--no-heading',
+    '--color=never',
+    '--with-filename',
+    '--line-number',
+    '--column',
+    '-g',
+    '!.git',
+  },
+  expr_opt = '-e',
+  fixed_string_opt = '-F',
+  default_fopts = { '-N' },
+  smart_case = '-S',
+  ignore_case = '-i',
+  hidden_opt = '--hidden',
+}
+
 M.timeout = 200
 
 M.setup = function(conf)
-  if type(conf) ~= "table" then return end
+  if type(conf) ~= 'table' then
+    return
+  end
 
   M.color_templete = conf.color_templete or M.color_templete
 
   M.timeout = conf.timeout or M.timeout
-
-
 end
 
 return M
