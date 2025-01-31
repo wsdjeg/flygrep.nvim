@@ -1,6 +1,9 @@
 # flygrep.nvim
 
-> searching text in neovim floating window asynchronously 
+> _flygrep.nvim_ is a plugin to searching text in neovim floating window asynchronously 
+
+[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
+[![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](LICENSE)
 
 ![Image](https://github.com/user-attachments/assets/49638d4c-4828-4d46-9c24-165102ef61a7)
 
@@ -12,6 +15,7 @@
 - [Command](#command)
 - [Configuration](#configuration)
 - [Key Bindings](#key-bindings)
+- [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
@@ -91,3 +95,9 @@ require('flygrep').setup({
 | `<C-s>`      | open item in split window          |
 | `<C-v>`      | open item in vertical split window |
 | `<C-t>`      | open item in new tabpage           |
+
+## Feedback
+
+The development of this plugin is in [`SpaceVim/bundle/flygrep.nvim`](https://github.com/SpaceVim/SpaceVim/tree/master/bundle/flygrep.nvim) directory.
+
+If you encounter any bugs or have suggestions, please file an issue in the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues)
