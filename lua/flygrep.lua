@@ -15,6 +15,8 @@ if not ok then
   ok, cmp = pcall(require, 'cmp')
 end
 
+local log = require('flygrep.logger')
+
 local grep_root_dir = '.'
 
 local grep_timer_id = -1
@@ -474,6 +476,7 @@ function M.open(opt)
   else
     grep_root_dir = vim.fn.getcwd()
   end
+  log.info('flygrep cwd:' .. grep_root_dir)
   open_win()
 end
 
