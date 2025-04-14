@@ -400,6 +400,9 @@ local function open_win()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
     local filename, linenr, colum =
       get_file_pos(vim.api.nvim_buf_get_lines(result_bufid, line_number - 1, line_number, false)[1])
+    if not filename or not linenr or not colum then
+      return
+    end
     vim.api.nvim_win_close(prompt_winid, true)
     vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
     vim.api.nvim_win_close(result_winid, true)
