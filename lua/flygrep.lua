@@ -252,6 +252,7 @@ local function open_win()
   local screen_height = math.floor(vim.o.lines * 0.8)
 
   prompt_bufid = vim.api.nvim_create_buf(false, true)
+  vim.b[prompt_bufid].completion = false -- https://github.com/Saghen/blink.cmp/commit/79545c371ab08cf4563fffb9f5c7a7c9e8fbc786
   prompt_winid = vim.api.nvim_open_win(prompt_bufid, true, {
     relative = 'editor',
     width = screen_width,
