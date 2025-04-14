@@ -331,6 +331,7 @@ local function open_win()
     { win = result_winid }
   )
   vim.api.nvim_set_option_value('cursorline', true, { win = result_winid })
+  vim.api.nvim_set_option_value('cursorlineopt', 'both', { win = result_winid })
   if ok then
     cmp.setup.buffer({
       completion = {
