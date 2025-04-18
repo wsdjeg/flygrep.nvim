@@ -481,7 +481,7 @@ function M.open(opt)
 end
 
 function M.setup(opt)
-    configig = require('flygrep.configig').setup(opt)
+    config = require('flygrep.configig').setup(opt)
 end
 
 return M
