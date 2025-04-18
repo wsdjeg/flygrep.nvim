@@ -280,7 +280,6 @@ local function open_win()
     vim.api.nvim_set_option_value('number', false, { win = prompt_winid })
     vim.api.nvim_set_option_value('relativenumber', false, { win = prompt_winid })
     vim.api.nvim_set_option_value('cursorline', false, { win = prompt_winid })
-    vim.api.nvim_set_option_value('cursorlineopt', 'both', { win = result_winid })
     vim.api.nvim_set_option_value('signcolumn', 'yes', { win = prompt_winid })
     vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
         sign_text = '>',
@@ -338,6 +337,7 @@ local function open_win()
         { win = result_winid }
     )
     vim.api.nvim_set_option_value('cursorline', true, { win = result_winid })
+    vim.api.nvim_set_option_value('cursorlineopt', 'both', { win = result_winid })
     if ok then
         cmp.setup.buffer({
             completion = {
