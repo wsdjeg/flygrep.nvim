@@ -169,9 +169,9 @@ end
 local function toggle_fix_string()
     fix_string = not fix_string
     vim.cmd('doautocmd TextChangedI')
-    local config = vim.api.nvim_win_get_configig(prompt_winid)
-    config.title = build_prompt_title()
-    vim.api.nvim_win_set_configig(prompt_winid, config)
+    local win_conf = vim.api.nvim_win_get_config(prompt_winid)
+    win_conf.title = build_prompt_title()
+    vim.api.nvim_win_set_config(prompt_winid, win_conf)
 end
 
 local function toggle_preview_win()
@@ -199,18 +199,18 @@ local function toggle_preview_win()
             -- noautocmd = true,
         })
         vim.api.nvim_set_option_value('cursorline', true, { win = preview_winid })
-        local winopt = vim.api.nvim_win_get_configig(result_winid)
+        local winopt = vim.api.nvim_win_get_config(result_winid)
         winopt.row = start_row + math.floor((screen_height - 5) / 2) + 2
         winopt.height = screen_height - 5 - math.floor((screen_height - 5) / 2) - 2
-        vim.api.nvim_win_set_configig(result_winid, winopt)
+        vim.api.nvim_win_set_config(result_winid, winopt)
         vim.fn.timer_stop(preview_timer_id)
         preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
     else
         vim.api.nvim_win_close(preview_winid, true)
-        local winopt = vim.api.nvim_win_get_configig(result_winid)
+        local winopt = vim.api.nvim_win_get_config(result_winid)
         winopt.row = start_row
         winopt.height = screen_height - 5
-        vim.api.nvim_win_set_configig(result_winid, winopt)
+        vim.api.nvim_win_set_config(result_winid, winopt)
     end
 end
 
