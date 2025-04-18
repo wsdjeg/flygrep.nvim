@@ -258,6 +258,7 @@ local function open_win()
     local screen_height = math.floor(vim.o.lines * 0.8)
 
     prompt_bufid = vim.api.nvim_create_buf(false, true)
+    vim.b[prompt_bufid].completion = false -- https://github.com/Saghen/blink.cmp/commit/79545c371ab08cf4563fffb9f5c7a7c9e8fbc786
     prompt_winid = vim.api.nvim_open_win(prompt_bufid, true, {
         relative = 'editor',
         width = screen_width,
@@ -279,6 +280,7 @@ local function open_win()
     vim.api.nvim_set_option_value('number', false, { win = prompt_winid })
     vim.api.nvim_set_option_value('relativenumber', false, { win = prompt_winid })
     vim.api.nvim_set_option_value('cursorline', false, { win = prompt_winid })
+    vim.api.nvim_set_option_value('cursorlineopt', 'both', { win = result_winid })
     vim.api.nvim_set_option_value('signcolumn', 'yes', { win = prompt_winid })
     vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
         sign_text = '>',
@@ -405,6 +407,9 @@ local function open_win()
         local filename, linenr, colum = get_file_pos(
             vim.api.nvim_buf_get_lines(result_bufid, line_number - 1, line_number, false)[1]
         )
+        if not filename or not linenr or not colum then
+            return
+        end
         vim.api.nvim_win_close(prompt_winid, true)
         vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
         vim.api.nvim_win_close(result_winid, true)
