@@ -9,13 +9,13 @@
 
 <!-- vim-markdown-toc GFM -->
 
-- [Intro](#intro)
-- [Requirements](#requirements)
-- [Install](#install)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Key Bindings](#key-bindings)
-- [Feedback](#feedback)
+* [Intro](#intro)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Key Bindings](#key-bindings)
+* [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
@@ -28,9 +28,22 @@
 - [neovim](https://github.com/neovim/neovim): >= v0.10.0
 - [ripgrep](https://github.com/BurntSushi/ripgrep): If you are using other searching tool, you need to set command option of flygrep.
 
-## Install
+## Installation
 
-- use [vim-plug](https://github.com/junegunn/vim-plug) package manager
+- use [nvim-plug](https://github.com/wsdjeg/nvim-plug)
+
+```lua
+require('plug').add({
+    {
+        'wsdjeg/flygrep.nvim',
+        config = function()
+            require('flygrep').setup()
+        end,
+
+        depends = { { 'wsdjeg/job.nvim' } },
+    },
+})
+```
 
 ```
 Plug 'wsdjeg/flygrep.nvim'

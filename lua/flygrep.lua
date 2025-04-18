@@ -7,9 +7,8 @@
 --=============================================================================
 
 local M = {}
-local conf = require('flygrep.config')
 local config
-local job = require('spacevim.api.job')
+local job = require('job')
 local ok, cmp = pcall(require, 'cmp')
 if not ok then
   vim.cmd('doautocmd InsertEnter')
@@ -53,17 +52,17 @@ local function update_result_count()
 end
 
 local function build_grep_command()
-  local cmd = { conf.command.execute }
-  for _, v in ipairs(conf.command.default_opts) do
+  local cmd = { config.command.execute }
+  for _, v in ipairs(config.command.default_opts) do
     table.insert(cmd, v)
   end
   if include_hidden_file then
-    table.insert(cmd, conf.command.hidden_opt)
+    table.insert(cmd, config.command.hidden_opt)
   end
   if fix_string then
-    table.insert(cmd, conf.command.fixed_string_opt)
+    table.insert(cmd, config.command.fixed_string_opt)
   else
-    table.insert(cmd, conf.command.expr_opt)
+    table.insert(cmd, config.command.expr_opt)
   end
   table.insert(cmd, grep_input)
   table.insert(cmd, '.')
@@ -126,7 +125,7 @@ local function grep_timer(t)
       then
         if vim.fn.getbufline(result_bufid, 1)[1] == '' then
           vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, data)
-          if conf.enable_preview then
+          if config.enable_preview then
             vim.fn.timer_stop(preview_timer_id)
             preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
           end
@@ -164,20 +163,20 @@ end
 local function toggle_fix_string()
   fix_string = not fix_string
   vim.cmd('doautocmd TextChangedI')
-  local conf = vim.api.nvim_win_get_config(prompt_winid)
-  conf.title = build_prompt_title()
-  vim.api.nvim_win_set_config(prompt_winid, conf)
+  local config = vim.api.nvim_win_get_configig(prompt_winid)
+  config.title = build_prompt_title()
+  vim.api.nvim_win_set_configig(prompt_winid, config)
 end
 
 local function toggle_preview_win()
-  conf.enable_preview = not conf.enable_preview
+  config.enable_preview = not config.enable_preview
   local screen_width = math.floor(vim.o.columns * 0.8)
   -- 起始位位置： lines * 10%, columns * 10%
   local start_col = math.floor(vim.o.columns * 0.1)
   local start_row = math.floor(vim.o.lines * 0.1)
   -- 整体高度：lines 的 80%
   local screen_height = math.floor(vim.o.lines * 0.8)
-  if conf.enable_preview then
+  if config.enable_preview then
     if not vim.api.nvim_buf_is_valid(preview_bufid) then
       preview_bufid = vim.api.nvim_create_buf(false, true)
     end
@@ -194,18 +193,18 @@ local function toggle_preview_win()
       -- noautocmd = true,
     })
     vim.api.nvim_set_option_value('cursorline', true, { win = preview_winid })
-    local winopt = vim.api.nvim_win_get_config(result_winid)
+    local winopt = vim.api.nvim_win_get_configig(result_winid)
     winopt.row = start_row + math.floor((screen_height - 5) / 2) + 2
     winopt.height = screen_height - 5 - math.floor((screen_height - 5) / 2) - 2
-    vim.api.nvim_win_set_config(result_winid, winopt)
+    vim.api.nvim_win_set_configig(result_winid, winopt)
     vim.fn.timer_stop(preview_timer_id)
     preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
   else
     vim.api.nvim_win_close(preview_winid, true)
-    local winopt = vim.api.nvim_win_get_config(result_winid)
+    local winopt = vim.api.nvim_win_get_configig(result_winid)
     winopt.row = start_row
     winopt.height = screen_height - 5
-    vim.api.nvim_win_set_config(result_winid, winopt)
+    vim.api.nvim_win_set_configig(result_winid, winopt)
   end
 end
 
@@ -216,7 +215,7 @@ local function next_item()
   else
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
   end
-  if conf.enable_preview then
+  if config.enable_preview then
     vim.fn.timer_stop(preview_timer_id)
     preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
   end
@@ -234,7 +233,7 @@ local function previous_item()
   else
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
   end
-  if conf.enable_preview then
+  if config.enable_preview then
     vim.fn.timer_stop(preview_timer_id)
     preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
   end
@@ -280,7 +279,7 @@ local function open_win()
     sign_hl_group = 'Error',
   })
 
-  if conf.enable_preview then
+  if config.enable_preview then
     if not vim.api.nvim_buf_is_valid(preview_bufid) then
       preview_bufid = vim.api.nvim_create_buf(false, true)
     end
@@ -355,20 +354,20 @@ local function open_win()
         pcall(vim.fn.timer_stop, grep_timer_id)
         pcall(job.stop, search_jobid)
         search_hi_id = vim.fn.matchadd(
-          conf.matched_higroup,
+          config.matched_higroup,
           grep_input:gsub('~', '\\~'),
           10,
           -1,
           { window = result_winid }
         )
-        grep_timer_id = vim.fn.timer_start(conf.timeout, grep_timer, { ['repeat'] = 1 })
+        grep_timer_id = vim.fn.timer_start(config.timeout, grep_timer, { ['repeat'] = 1 })
       else
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         pcall(vim.fn.timer_stop, grep_timer_id)
         job.stop(search_jobid)
         search_jobid = 0
         vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
-        if conf.enable_preview and vim.api.nvim_buf_is_valid(preview_bufid) then
+        if config.enable_preview and vim.api.nvim_buf_is_valid(preview_bufid) then
           vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
         end
       end
@@ -384,7 +383,7 @@ local function open_win()
       vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
       vim.api.nvim_win_close(result_winid, true)
       vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
-      if conf.enable_preview then
+      if config.enable_preview then
         vim.api.nvim_win_close(preview_winid, true)
         vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
       end
@@ -403,7 +402,7 @@ local function open_win()
     vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
     vim.api.nvim_win_close(result_winid, true)
     vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
-    if conf.enable_preview then
+    if config.enable_preview then
       vim.api.nvim_win_close(preview_winid, true)
       vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
     end
@@ -482,7 +481,7 @@ function M.open(opt)
 end
 
 function M.setup(opt)
-    config = require('flygrep.config').setup(opt)
+    configig = require('flygrep.configig').setup(opt)
 end
 
 return M
