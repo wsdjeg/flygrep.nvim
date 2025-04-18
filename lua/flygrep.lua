@@ -8,6 +8,7 @@
 
 local M = {}
 local conf = require('flygrep.config')
+local config
 local job = require('spacevim.api.job')
 local ok, cmp = pcall(require, 'cmp')
 if not ok then
@@ -480,8 +481,8 @@ function M.open(opt)
   open_win()
 end
 
-function M.setup(c)
-  require('flygrep.config').setup(c)
+function M.setup(opt)
+    config = require('flygrep.config').setup(opt)
 end
 
 return M
