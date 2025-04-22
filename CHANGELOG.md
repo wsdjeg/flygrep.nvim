@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/wsdjeg/flygrep.nvim/compare/v1.0.0...v1.1.0) (2025-04-22)
+
+
+### Features
+
+* add window option ([297d0d4](https://github.com/wsdjeg/flygrep.nvim/commit/297d0d42f5371a9392c7fdce3fdca42d29d69d66))
+
+
+### Bug Fixes
+
+* avoid overriden by global 'cursorlineopt' ([5375239](https://github.com/wsdjeg/flygrep.nvim/commit/53752399c4ddcd9209d6479322c773f3a5cf180f))
+* disable blink.cmp on prompt win ([5116b1d](https://github.com/wsdjeg/flygrep.nvim/commit/5116b1d9c6147718fd38fc981505a9fd281b296a))
+* remove setup function from plugin ([90a9135](https://github.com/wsdjeg/flygrep.nvim/commit/90a91355bb6af207ab0642def32ce5159694c6fc))
+* when enter no entry matched ([65f42d4](https://github.com/wsdjeg/flygrep.nvim/commit/65f42d4dc13c1cc861e1dbb7dd47af3d2c07781c))
+
 ## 1.0.0 (2025-03-17)
 
 
