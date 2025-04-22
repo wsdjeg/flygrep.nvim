@@ -121,7 +121,9 @@ local function grep_timer(t)
         pcall(vim.api.nvim_buf_del_extmark, prompt_bufid, extns, prompt_count_id)
         prompt_count_id = update_result_count()
     end
-    search_jobid = job.start(build_grep_command(), {
+    local cmd = build_grep_command()
+    log.debug('cmd is:' .. vim.inspect(cmd))
+    search_jobid = job.start(cmd, {
         on_stdout = function(id, data)
             if
                 id == search_jobid

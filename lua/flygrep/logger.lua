@@ -1,14 +1,16 @@
 local M = {}
 local logger
-function M.info(msg)
-  if not logger then
-    pcall(function()
-      logger = require('logger').derive('flygrep')
-      logger.info(msg)
-    end)
-  else
-    logger.info(msg)
-  end
+for _, f in ipairs({ 'info', 'debug', 'warn', 'error' }) do
+    M[f] = function(msg)
+        if not logger then
+            pcall(function()
+                logger = require('logger').derive('flygrep')
+                logger[f](msg)
+            end)
+        else
+            logger[f](msg)
+        end
+    end
 end
 
 return M
