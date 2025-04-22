@@ -41,6 +41,12 @@ local default_config = {
     matched_higroup = 'IncSearch',
 
     enable_preview = false,
+    window = {
+        width = 0.8,
+        height = 0.8,
+        col = 0.1,
+        row = 0.1,
+    },
 }
 
 M.setup = function(opt)
