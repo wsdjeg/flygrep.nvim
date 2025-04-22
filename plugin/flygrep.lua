@@ -9,5 +9,3 @@
 vim.api.nvim_create_user_command('FlyGrep', function(opt)
   require('flygrep').open()
 end, {})
-
-require('flygrep').setup()
