@@ -76,44 +76,50 @@ require('flygrep').open({
 
 ```lua
 require('flygrep').setup({
-  color_templete = {
-    a = {
-      fg = '#2c323c',
-      bg = '#98c379',
-      ctermfg = 16,
-      ctermbg = 114,
-      bold = true,
+    color_templete = {
+        a = {
+            fg = '#2c323c',
+            bg = '#98c379',
+            ctermfg = 16,
+            ctermbg = 114,
+            bold = true,
+        },
+        b = {
+            fg = '#abb2bf',
+            bg = '#3b4048',
+            ctermfg = 145,
+            ctermbg = 16,
+            bold = false,
+        },
     },
-    b = {
-      fg = '#abb2bf',
-      bg = '#3b4048',
-      ctermfg = 145,
-      ctermbg = 16,
-      bold = false,
+    timeout = 200,
+    command = {
+        execute = 'rg',
+        default_opts = {
+            '--no-heading',
+            '--color=never',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '-g',
+            '!.git',
+        },
+        recursive_opt = {},
+        expr_opt = { '-e' },
+        fixed_string_opt = { '-F' },
+        default_fopts = { '-N' },
+        smart_case = { '-S' },
+        ignore_case = { '-i' },
+        hidden_opt = { '--hidden' },
     },
-  },
-  timeout = 200,
-  command = {
-    execute = 'rg',
-    default_opts = {
-      '--no-heading',
-      '--color=never',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '-g',
-      '!.git',
+    matched_higroup = 'IncSearch',
+    enable_preview = false,
+    window = {
+        width = 0.8,   -- flygrep screen width, default is vim.o.columns * 0.8
+        height = 0.8,  -- flygrep screen height, default is vim.o.lines * 0.8
+        col = 0.1,     -- flygrep screen start col, default is vim.o.columns * 0.1
+        row = 0.1,     -- flygrep screen start row, default is vim.o.lines * 0.1
     },
-    recursive_opt = {},
-    expr_opt = { '-e' },
-    fixed_string_opt = { '-F' },
-    default_fopts = { '-N' },
-    smart_case = { '-S' },
-    ignore_case = { '-i' },
-    hidden_opt = { '--hidden' },
-  },
-  matched_higroup = 'IncSearch',
-  enable_preview = false,
 })
 ```
 

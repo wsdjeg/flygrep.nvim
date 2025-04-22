@@ -176,12 +176,12 @@ end
 
 local function toggle_preview_win()
     config.enable_preview = not config.enable_preview
-    local screen_width = math.floor(vim.o.columns * 0.8)
+    local screen_width = math.floor(vim.o.columns * config.window.width)
     -- 起始位位置： lines * 10%, columns * 10%
-    local start_col = math.floor(vim.o.columns * 0.1)
-    local start_row = math.floor(vim.o.lines * 0.1)
+    local start_col = math.floor(vim.o.columns * config.window.col)
+    local start_row = math.floor(vim.o.lines * config.window.row)
     -- 整体高度：lines 的 80%
-    local screen_height = math.floor(vim.o.lines * 0.8)
+    local screen_height = math.floor(vim.o.lines * config.window.height)
     if config.enable_preview then
         if not vim.api.nvim_buf_is_valid(preview_bufid) then
             preview_bufid = vim.api.nvim_create_buf(false, true)
@@ -250,12 +250,12 @@ local function open_win()
     require('flygrep.highlight').def_higroup(config.color_templete)
     -- 窗口位置
     -- 宽度： columns 的 80%
-    local screen_width = math.floor(vim.o.columns * 0.8)
+    local screen_width = math.floor(vim.o.columns * config.window.width)
     -- 起始位位置： lines * 10%, columns * 10%
-    local start_col = math.floor(vim.o.columns * 0.1)
-    local start_row = math.floor(vim.o.lines * 0.1)
+    local start_col = math.floor(vim.o.columns * config.window.col)
+    local start_row = math.floor(vim.o.lines * config.window.row)
     -- 整体高度：lines 的 80%
-    local screen_height = math.floor(vim.o.lines * 0.8)
+    local screen_height = math.floor(vim.o.lines * config.window.height)
 
     prompt_bufid = vim.api.nvim_create_buf(false, true)
     vim.b[prompt_bufid].completion = false -- https://github.com/Saghen/blink.cmp/commit/79545c371ab08cf4563fffb9f5c7a7c9e8fbc786
