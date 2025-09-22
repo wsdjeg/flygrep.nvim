@@ -2,6 +2,17 @@ local M = {}
 
 local default_config = {
     timeout = 200,
+    mappings = {
+        next_item = '<Tab>',
+        previous_item = '<S-Tab>',
+        toggle_fix_string = '<C-e>',
+        toggle_hidden_file = '<C-h>',
+        toggle_preview_win = '<C-p>',
+        open_item_edit = '<Enter>',
+        open_item_split = '<C-s>',
+        open_item_vsplit = '<C-v>',
+        open_item_tabedit = '<C-t>',
+    },
     color_templete = {
         a = {
             fg = '#2c323c',

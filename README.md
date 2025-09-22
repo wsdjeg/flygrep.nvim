@@ -9,13 +9,13 @@
 
 <!-- vim-markdown-toc GFM -->
 
-* [Intro](#intro)
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration](#configuration)
-* [Key Bindings](#key-bindings)
-* [Feedback](#feedback)
+- [Intro](#intro)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Key Bindings](#key-bindings)
+- [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
@@ -93,6 +93,17 @@ require('flygrep').setup({
         },
     },
     timeout = 200,
+    mappings = {
+        next_item = '<Tab>',
+        previous_item = '<S-Tab>',
+        toggle_fix_string = '<C-e>',
+        toggle_hidden_file = '<C-h>',
+        toggle_preview_win = '<C-p>',
+        open_item_edit = '<Enter>',
+        open_item_split = '<C-s>',
+        open_item_vsplit = '<C-v>',
+        open_item_tabedit = '<C-t>',
+    },
     command = {
         execute = 'rg',
         default_opts = {
@@ -125,16 +136,16 @@ require('flygrep').setup({
 
 ## Key Bindings
 
-| Key bindings         | descretion                         |
-| -------------------- | ---------------------------------- |
-| `<Enter>`            | open cursor item                   |
-| `<Tab>` or `<C-j>`   | next item                          |
-| `<S-Tab>` or `<C-k>` | previous item                      |
-| `<C-s>`              | open item in split window          |
-| `<C-v>`              | open item in vertical split window |
-| `<C-t>`              | open item in new tabpage           |
-| `<C-p>`              | toggle preview window              |
-| `<C-h>`              | toggle display hidden files        |
+| Key bindings | descretion                         |
+| ------------ | ---------------------------------- |
+| `<Enter>`    | open cursor item                   |
+| `<Tab>`      | next item                          |
+| `<S-Tab>`    | previous item                      |
+| `<C-s>`      | open item in split window          |
+| `<C-v>`      | open item in vertical split window |
+| `<C-t>`      | open item in new tabpage           |
+| `<C-p>`      | toggle preview window              |
+| `<C-h>`      | toggle display hidden files        |
 
 ## Feedback
 
