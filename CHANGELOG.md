@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/wsdjeg/flygrep.nvim/compare/v1.1.0...v1.2.0) (2025-11-04)
+
+
+### Features
+
+* improve flygrep logger ([ca986ee](https://github.com/wsdjeg/flygrep.nvim/commit/ca986ee5a7e53129b9047b82a4115fc326cf3870))
+* **mappings:** support custom mappings ([9584a79](https://github.com/wsdjeg/flygrep.nvim/commit/9584a79456bf1a3a2686f06a3ef4a5f1bcdddcff))
+
+
+### Bug Fixes
+
+* catch matchadd error ([947c98e](https://github.com/wsdjeg/flygrep.nvim/commit/947c98ec2fa66c9370a7e1c5d2a8a7833df1b36a))
+
 ## [1.1.0](https://github.com/wsdjeg/flygrep.nvim/compare/v1.0.0...v1.1.0) (2025-04-22)
 
 
