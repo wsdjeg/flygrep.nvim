@@ -363,7 +363,7 @@ local function open_win()
                 pcall(vim.fn.matchdelete, search_hi_id, result_winid)
                 pcall(vim.fn.timer_stop, grep_timer_id)
                 pcall(job.stop, search_jobid)
-                search_hi_id = vim.fn.matchadd(
+                search_hi_id = pcall(vim.fn.matchadd,
                     config.matched_higroup,
                     grep_input:gsub('~', '\\~'),
                     10,
