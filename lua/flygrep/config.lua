@@ -12,6 +12,7 @@ local default_config = {
         open_item_split = '<C-s>',
         open_item_vsplit = '<C-v>',
         open_item_tabedit = '<C-t>',
+        apply_quickfix = '<C-q>',
     },
     color_templete = {
         a = {

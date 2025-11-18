@@ -167,6 +167,25 @@ local function toggle_hidden_file()
     include_hidden_file = not include_hidden_file
     vim.cmd('doautocmd TextChangedI')
 end
+local function apply_to_quickfix()
+    vim.cmd('noautocmd stopinsert')
+    local searching_result = vim.api.nvim_buf_get_lines(result_bufid, 0, -1, false)
+    local searching_partten = vim.api.nvim_buf_get_lines(prompt_bufid, 0, -1, false)[1] or ''
+    vim.api.nvim_win_close(prompt_winid, true)
+    vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
+    vim.api.nvim_win_close(result_winid, true)
+    vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
+    if config.enable_preview then
+        vim.api.nvim_win_close(preview_winid, true)
+        vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
+    end
+    vim.o.mouse = saved_mouse_opt
+    vim.fn.setqflist({}, 'r', {
+        title = 'flygrep partten:' .. searching_partten,
+        lines = searching_result,
+    })
+    vim.cmd('botright copen')
+end
 
 local function toggle_fix_string()
     fix_string = not fix_string
@@ -363,7 +382,8 @@ local function open_win()
                 pcall(vim.fn.matchdelete, search_hi_id, result_winid)
                 pcall(vim.fn.timer_stop, grep_timer_id)
                 pcall(job.stop, search_jobid)
-                search_hi_id = pcall(vim.fn.matchadd,
+                search_hi_id = pcall(
+                    vim.fn.matchadd,
                     config.matched_higroup,
                     grep_input:gsub('~', '\\~'),
                     10,
@@ -458,6 +478,12 @@ local function open_win()
         toggle_hidden_file()
         update_result_count()
     end, { buffer = prompt_bufid })
+    vim.keymap.set(
+        'i',
+        config.mappings.apply_quickfix,
+        apply_to_quickfix,
+        { buffer = prompt_bufid }
+    )
     vim.keymap.set('i', config.mappings.toggle_preview_win, function()
         toggle_preview_win()
     end, { buffer = prompt_bufid })

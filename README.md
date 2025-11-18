@@ -146,6 +146,7 @@ require('flygrep').setup({
 | `<C-t>`      | open item in new tabpage           |
 | `<C-p>`      | toggle preview window              |
 | `<C-h>`      | toggle display hidden files        |
+| `Ctrl-q`     | apply all items into quickfix      |
 
 ## Feedback
 
