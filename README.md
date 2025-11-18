@@ -105,6 +105,10 @@ require('flygrep').setup({
         open_item_split = '<C-s>',
         open_item_vsplit = '<C-v>',
         open_item_tabedit = '<C-t>',
+        apply_quickfix = '<C-q>',
+        -- prevent Ctrl-J from inserting a new line
+        -- which can be overridden by mapping settings
+        ignore_keys = { '<C-j>' },
     },
     command = {
         execute = 'rg',
@@ -128,10 +132,10 @@ require('flygrep').setup({
     matched_higroup = 'IncSearch',
     enable_preview = false,
     window = {
-        width = 0.8,   -- flygrep screen width, default is vim.o.columns * 0.8
-        height = 0.8,  -- flygrep screen height, default is vim.o.lines * 0.8
-        col = 0.1,     -- flygrep screen start col, default is vim.o.columns * 0.1
-        row = 0.1,     -- flygrep screen start row, default is vim.o.lines * 0.1
+        width = 0.8, -- flygrep screen width, default is vim.o.columns * 0.8
+        height = 0.8, -- flygrep screen height, default is vim.o.lines * 0.8
+        col = 0.1, -- flygrep screen start col, default is vim.o.columns * 0.1
+        row = 0.1, -- flygrep screen start row, default is vim.o.lines * 0.1
     },
 })
 ```

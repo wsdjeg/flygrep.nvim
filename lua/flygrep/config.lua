@@ -13,6 +13,7 @@ local default_config = {
         open_item_vsplit = '<C-v>',
         open_item_tabedit = '<C-t>',
         apply_quickfix = '<C-q>',
+        ignore_keys = { '<C-j>' },
     },
     color_templete = {
         a = {

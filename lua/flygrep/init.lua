@@ -404,6 +404,11 @@ local function open_win()
             update_result_count()
         end,
     })
+    -- 如果使用 Tab/Shift-Tab 上下移动，ctrl-j 会插入新行，
+    -- 增加 ignore_keys 选项禁用掉一些输入模式的按键
+    for _, k in ipairs(config.mappings.ignore_keys) do
+        vim.keymap.set('i', k, '<Nop>', { buffer = prompt_bufid })
+    end
 
     -- 使用 Esc/C-c 关闭整个界面
     for _, k in ipairs({ '<Esc>', '<C-c>' }) do
