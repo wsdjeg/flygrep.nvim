@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/wsdjeg/flygrep.nvim/compare/v1.2.0...v1.3.0) (2025-11-23)
+
+
+### Features
+
+* add ctrl-q to apply quickfix ([e695654](https://github.com/wsdjeg/flygrep.nvim/commit/e6956547f1647430fdff647c42c131a3331e61ab))
+* add ignore_keys options ([3b49900](https://github.com/wsdjeg/flygrep.nvim/commit/3b499006280ca057a79458b009c680c5e8f0e82d))
+* add luarocks support ([1ffc2b0](https://github.com/wsdjeg/flygrep.nvim/commit/1ffc2b0418640636c788825d8173c39a189ba476))
+
+
+### Bug Fixes
+
+* disable F1 in insert mode ([665b5ee](https://github.com/wsdjeg/flygrep.nvim/commit/665b5eea4bbba6d47913a749259be22161d8d8cb))
+
 ## [1.2.0](https://github.com/wsdjeg/flygrep.nvim/compare/v1.1.0...v1.2.0) (2025-11-04)
 
 
