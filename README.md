@@ -6,6 +6,7 @@
 [![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/wsdjeg/flygrep.nvim)](https://github.com/wsdjeg/flygrep.nvim/issues)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/wsdjeg/flygrep.nvim)](https://github.com/wsdjeg/flygrep.nvim/commits/master/)
 [![GitHub Release](https://img.shields.io/github/v/release/wsdjeg/flygrep.nvim)](https://github.com/wsdjeg/flygrep.nvim/releases)
+[![luarocks](https://img.shields.io/luarocks/v/wsdjeg/flygrep.nvim)](https://luarocks.org/modules/wsdjeg/flygrep.nvim)
 
 ![flygrep.nvim](https://img.spacevim.org/flygrep.nvim.gif)
 
