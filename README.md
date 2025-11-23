@@ -51,6 +51,12 @@ require('plug').add({
 Plug 'wsdjeg/flygrep.nvim'
 ```
 
+Using [luarocks](https://luarocks.org/)
+
+```
+luarocks install flygrep.nvim
+```
+
 ## Usage
 
 - `:FlyGrep`: open flygrep in current directory
