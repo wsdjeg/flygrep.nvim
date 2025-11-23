@@ -33,30 +33,32 @@
 
 ## Installation
 
-- use [nvim-plug](https://github.com/wsdjeg/nvim-plug)
+- Using [nvim-plug](https://github.com/wsdjeg/nvim-plug)
 
-```lua
-require('plug').add({
-    {
-        'wsdjeg/flygrep.nvim',
-        config = function()
-            require('flygrep').setup()
-        end,
+  ```lua
+  require('plug').add({
+      {
+          'wsdjeg/flygrep.nvim',
+          config = function()
+              require('flygrep').setup()
+          end,
 
-        depends = { { 'wsdjeg/job.nvim' } },
-    },
-})
-```
+          depends = { { 'wsdjeg/job.nvim' } },
+      },
+  })
+  ```
 
-```
-Plug 'wsdjeg/flygrep.nvim'
-```
+- Using [vim-plug](https://github.com/junegunn/vim-plug)
 
-Using [luarocks](https://luarocks.org/)
+  ```
+  Plug 'wsdjeg/flygrep.nvim'
+  ```
 
-```
-luarocks install flygrep.nvim
-```
+- Using [luarocks](https://luarocks.org/)
+
+  ```
+  luarocks install flygrep.nvim
+  ```
 
 ## Usage
 
