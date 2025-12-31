@@ -72,7 +72,11 @@ M.hi = function(info)
   end
 
   if vim.fn.empty(style) == 0 then
-    cmd = cmd .. ' gui=' .. vim.fn.join(style, ',') .. ' cterm=' .. vim.fn.join(style, ',')
+    cmd = cmd
+      .. ' gui='
+      .. vim.fn.join(style, ',')
+      .. ' cterm='
+      .. vim.fn.join(style, ',')
   end
   if info.blend then
     cmd = cmd .. ' blend=' .. info.blend
@@ -101,6 +105,4 @@ function M.hi_separator(a, b)
   M.hi(hi_b_a)
 end
 
-
 return M
-
