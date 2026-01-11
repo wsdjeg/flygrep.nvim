@@ -419,14 +419,15 @@ local function open_win()
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         pcall(vim.fn.timer_stop, grep_timer_id)
         pcall(job.stop, search_jobid)
-        search_hi_id = pcall(
-          vim.fn.matchadd,
-          config.matched_higroup,
-          grep_input:gsub('~', '\\~'),
-          10,
-          -1,
-          { window = result_winid }
-        )
+        pcall(function()
+          search_hi_id = vim.fn.matchadd(
+            config.matched_higroup,
+            grep_input:gsub('~', '\\~'),
+            10,
+            -1,
+            { window = result_winid }
+          )
+        end)
         grep_timer_id =
           vim.fn.timer_start(config.timeout, grep_timer, { ['repeat'] = 1 })
       else
