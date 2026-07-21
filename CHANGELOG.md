@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.1](https://github.com/wsdjeg/flygrep.nvim/compare/v1.3.0...v1.3.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* fix wrong search_hi_id generation ([8f68dec](https://github.com/wsdjeg/flygrep.nvim/commit/8f68dec4c413f5b1e68f130b33493ea92971dbeb))
+
+
+### Documentation
+
+* update README with emoji headings, features section, and more installation options ([558a18e](https://github.com/wsdjeg/flygrep.nvim/commit/558a18e4001a3aeb1cc1c62b1f042dd8f585acac))
+
 ## [1.3.0](https://github.com/wsdjeg/flygrep.nvim/compare/v1.2.0...v1.3.0) (2025-11-23)
 
 
