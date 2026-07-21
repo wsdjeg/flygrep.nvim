@@ -3,9 +3,11 @@ name: Run Tests
 on:
   push:
     branches:
+      - main
       - master
   pull_request:
     branches:
+      - main
       - master
   workflow_dispatch:
 
@@ -29,18 +31,18 @@ jobs:
           neovim: true
           version: ${{ matrix.nvim-version }}
 
-      - name: Install ripgrep (Ubuntu)
+      - name: Install dependencies (ubuntu)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y ripgrep curl
 
-      - name: Install ripgrep (macOS)
+      - name: Install dependencies (macos)
         if: runner.os == 'macOS'
         run: |
           brew install ripgrep curl
 
-      - name: Install ripgrep (Windows)
+      - name: Install dependencies (windows)
         if: runner.os == 'Windows'
         run: |
           choco install ripgrep curl
@@ -49,7 +51,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: test/.deps
-          key: test-deps-${{ runner.os }}-luaunit-job
+          key: test-deps-luaunit-job-${{ runner.os }}
 
       - name: Run tests
         run: make test

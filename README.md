@@ -2,6 +2,7 @@
 
 > _flygrep.nvim_ is a plugin to search text in neovim floating window asynchronously
 
+[![Run Tests](https://github.com/wsdjeg/flygrep.nvim/actions/workflows/test.yml/badge.svg)](https://github.com/wsdjeg/flygrep.nvim/actions/workflows/test.yml)
 [![GitHub License](https://img.shields.io/github/license/wsdjeg/flygrep.nvim)](LICENSE)
 [![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/wsdjeg/flygrep.nvim)](https://github.com/wsdjeg/flygrep.nvim/issues)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/wsdjeg/flygrep.nvim)](https://github.com/wsdjeg/flygrep.nvim/commits/master/)
