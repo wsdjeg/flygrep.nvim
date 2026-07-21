@@ -1,6 +1,10 @@
 # flygrep.nvim
 
-> _flygrep.nvim_ is a plugin to search text in neovim floating window asynchronously
+`flygrep.nvim` is a lightweight, asynchronous on-the-fly grep plugin for Neovim.
+It provides real-time search results in a floating window as you type,
+powered by ripgrep under the hood.
+With live preview, configurable search commands, and flexible window layouts,
+`flygrep.nvim` offers a fast and intuitive grep experience without leaving the editor.
 
 [![Run Tests](https://github.com/wsdjeg/flygrep.nvim/actions/workflows/test.yml/badge.svg)](https://github.com/wsdjeg/flygrep.nvim/actions/workflows/test.yml)
 [![GitHub License](https://img.shields.io/github/license/wsdjeg/flygrep.nvim)](LICENSE)
@@ -13,28 +17,41 @@
 
 <!-- vim-markdown-toc GFM -->
 
-- [Intro](#intro)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Key Bindings](#key-bindings)
-- [Feedback](#feedback)
+- [✨ Features](#-features)
+- [📦 Requirements](#-requirements)
+- [🔌 Installation](#-installation)
+- [⚙️ Configuration](#️-configuration)
+- [🚀 Usage](#-usage)
+- [⌨️ Key Bindings](#️-key-bindings)
+- [📣 Self-Promotion](#-self-promotion)
+- [💬 Feedback](#-feedback)
+- [📄 License](#-license)
 
 <!-- vim-markdown-toc -->
 
-## Intro
+## ✨ Features
 
-`flygrep.nvim` is a neovim plugin that can be used to search code asynchronously in real time.
+- Asynchronous real-time grep as you type
+- Powered by ripgrep for high-performance searching
+- Floating window with live preview support
+- Configurable search command and options
+- Smart case / ignore case / fixed string toggle
+- Hidden file toggle
+- Quickfix integration
+- Fully configurable key mappings and window layout
+- Optional completion via nvim-cmp (graceful fallback)
 
-## Requirements
+## 📦 Requirements
 
 - [neovim](https://github.com/neovim/neovim): >= v0.10.0
 - [ripgrep](https://github.com/BurntSushi/ripgrep): If you are using other searching tool, you need to set command option of flygrep.
+- [job.nvim](https://github.com/wsdjeg/job.nvim): Required for asynchronous job execution.
 
-## Installation
+## 🔌 Installation
 
-- Using [nvim-plug](https://github.com/wsdjeg/nvim-plug)
+flygrep.nvim works with all major Neovim plugin managers.
+
+- **Using [nvim-plug](https://github.com/wsdjeg/nvim-plug)**
 
   ```lua
   require('plug').add({
@@ -43,48 +60,47 @@
           config = function()
               require('flygrep').setup()
           end,
-
           depends = { { 'wsdjeg/job.nvim' } },
       },
   })
   ```
 
-- Using [vim-plug](https://github.com/junegunn/vim-plug)
+- **Using [lazy.nvim](https://github.com/folke/lazy.nvim)**
 
-  ```
-  Plug 'wsdjeg/flygrep.nvim'
+  ```lua
+  {
+      'wsdjeg/flygrep.nvim',
+      event = 'VeryLazy',
+      dependencies = { 'wsdjeg/job.nvim' },
+      config = function()
+          require('flygrep').setup()
+      end,
+  }
   ```
 
-- Using [luarocks](https://luarocks.org/)
+- **Using [packer.nvim](https://github.com/wbthomason/packer.nvim)**
+
+  ```lua
+  use({
+      'wsdjeg/flygrep.nvim',
+      requires = { 'wsdjeg/job.nvim' },
+      config = function()
+          require('flygrep').setup()
+      end,
+  })
+  ```
+
+- **Using [luarocks](https://luarocks.org/)**
 
   ```
   luarocks install flygrep.nvim
   ```
 
-## Usage
+## ⚙️ Configuration
 
-- `:FlyGrep`: open flygrep in current directory
-- `:lua require('flygrep').open(opt)`: opt supports following keys,
-  - cwd: root directory of searching job
-  - input: default input text in prompt window
-
-search text in buffer directory:
-
-```lua
-require('flygrep').open({
-  cwd = vim.fn.fnamemodify(vim.fn.bufname(), ':p:h'),
-})
-```
-
-search text under the cursor:
-
-```lua
-require('flygrep').open({
-  input = vim.fn.expand('<cword>')
-})
-```
-
-## Configuration
+This example shows a basic setup for flygrep.nvim.
+It customizes the search command, window layout, key mappings,
+and highlight groups to fit your workflow.
 
 ```lua
 require('flygrep').setup({
@@ -104,7 +120,7 @@ require('flygrep').setup({
             bold = false,
         },
     },
-    timeout = 200,
+    timeout = 200, -- debounce timeout in milliseconds
     mappings = {
         next_item = '<Tab>',
         previous_item = '<S-Tab>',
@@ -131,13 +147,12 @@ require('flygrep').setup({
             '-g',
             '!.git',
         },
-        recursive_opt = {},
-        expr_opt = { '-e' },
-        fixed_string_opt = { '-F' },
+        expr_opt = '-e',
+        fixed_string_opt = '-F',
         default_fopts = { '-N' },
-        smart_case = { '-S' },
-        ignore_case = { '-i' },
-        hidden_opt = { '--hidden' },
+        smart_case = '-S',
+        ignore_case = '-i',
+        hidden_opt = '--hidden',
     },
     matched_higroup = 'IncSearch',
     enable_preview = false,
@@ -150,20 +165,59 @@ require('flygrep').setup({
 })
 ```
 
-## Key Bindings
+## 🚀 Usage
 
-| Key bindings | descretion                         |
-| ------------ | ---------------------------------- |
-| `<Enter>`    | open cursor item                   |
-| `<Tab>`      | next item                          |
-| `<S-Tab>`    | previous item                      |
-| `<C-s>`      | open item in split window          |
-| `<C-v>`      | open item in vertical split window |
-| `<C-t>`      | open item in new tabpage           |
-| `<C-p>`      | toggle preview window              |
-| `<C-h>`      | toggle display hidden files        |
-| `Ctrl-q`     | apply all items into quickfix      |
+- `:FlyGrep`: open flygrep in current directory
+- `:lua require('flygrep').open(opt)`: `opt` supports following keys,
+  - `cwd`: root directory of searching job
+  - `input`: default input text in prompt window
 
-## Feedback
+Search text in buffer directory:
+
+```lua
+require('flygrep').open({
+  cwd = vim.fn.fnamemodify(vim.fn.bufname(), ':p:h'),
+})
+```
+
+Search text under the cursor:
+
+```lua
+require('flygrep').open({
+  input = vim.fn.expand('<cword>')
+})
+```
+
+## ⌨️ Key Bindings
+
+| Key binding | description                         |
+| ----------- | ----------------------------------- |
+| `<Enter>`   | open cursor item                    |
+| `<Tab>`     | next item                           |
+| `<S-Tab>`   | previous item                       |
+| `<C-s>`     | open item in split window           |
+| `<C-v>`     | open item in vertical split window  |
+| `<C-t>`     | open item in new tabpage            |
+| `<C-p>`     | toggle preview window               |
+| `<C-h>`     | toggle display hidden files         |
+| `<C-e>`     | toggle fixed string mode            |
+| `<C-q>`     | apply all items into quickfix       |
+| `<Esc>`     | close flygrep window                |
+| `<C-c>`     | close flygrep window                |
+
+## 📣 Self-Promotion
+
+Like this plugin? Star the repository on
+GitHub.
+
+Love this plugin? Follow [me](https://wsdjeg.net/) on
+[GitHub](https://github.com/wsdjeg) or [Twitter](https://x.com/EricWongDEV).
+
+## 💬 Feedback
 
 If you encounter any bugs or have suggestions, please file an issue in the [issue tracker](https://github.com/wsdjeg/flygrep.nvim/issues)
+
+## 📄 License
+
+Licensed under GPL-3.0.
+
